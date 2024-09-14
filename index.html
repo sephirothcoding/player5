@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-lt-installed="true">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player Radio</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    color: #00ffa8;
+    font-weight: bold;
+  }
+
+  #radio-player {
+    width: 500px;
+    height: 500px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    background-image: url('https://xatimg.com/image/GNcimE9EyxsO.png');
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    animation: fadeIn 1s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  audio {
+    width: 80%;
+    margin-top: 20px;
+  }
+
+  .social-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  .social-buttons a {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    animation: pulse 1s infinite alternate;
+  }
+
+  @keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+  }
+
+  .social-buttons a img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .social-buttons a:hover {
+    transform: scale(1.1);
+  }
+
+  #scroller {
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    animation: slideIn 5s infinite alternate;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  #info {
+    color: #00ffa8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+</style>
+</head>
+<body>
+<div id="radio-player">
+  <div id="info">
+    <p id="date">Date: Thursday, May 9, 2024</p>
+    <p id="time">Time: 08:02 PM</p>
+    <p id="listeners">Listeners: <span id="activeListeners">185</span></p>
+  </div>
+  <audio id="radio-audio" controls="" autoplay="">
+    <source src="https://boxstream.danceradiouk.com/stream/1/" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <div class="social-buttons">
+    <a href="https://www.facebook.com/" target="_blank"><img src="https://xatimg.com/image/T9KAqZ0eYvQF.png" alt="Facebook"></a>
+    <a href="https://www.instagram.com/" target="_blank"><img src="https://xatimg.com/image/6Zyb8rRtLNr5.png" alt="Instagram"></a>
+    <a href="https://www.youtube.com/" target="_blank"><img src="https://xatimg.com/image/SxMVzgBKmftF.png" alt="Youtube"></a>
+    <a href="https://www.twitter.com/" target="_blank"><img src="https://xatimg.com/image/Wd2VAcFmONKo.png" alt="twitter"></a>
+  </div>
+  <div id="scroller">
+    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+  </div>
+</div>
+
+<script>
+  var audio = document.getElementById('radio-audio');
+  var activeListeners = document.getElementById('activeListeners');
+
+  function increaseVolume() {
+    if (audio.volume < 1.0) {
+      audio.volume += 0.1;
+    }
+  }
+
+  function decreaseVolume() {
+    if (audio.volume > 0.0) {
+      audio.volume -= 0.1;
+    }
+  }
+
+  function updateDateTime() {
+    var now = new Date();
+    var date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    var time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('date').textContent = "Date: " + date;
+    document.getElementById('time').textContent = "Time: " + time;
+  }
+
+  function updateListeners() {
+    // Simulăm un număr aleatoriu de ascultători activi pentru scopuri de demonstrație
+    var numListeners = Math.floor(Math.random() * 1000) + 1;
+    activeListeners.textContent = numListeners;
+  }
+
+  setInterval(updateDateTime, 1000);
+  setInterval(updateListeners, 5000);
+  updateDateTime();
+</script>
+
+</body>
+</html>
